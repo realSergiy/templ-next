@@ -1,0 +1,47 @@
+{
+  "name": "totvibe-upl",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "devs": "next dev --experimental-https",
+    "build": "next build",
+    "start": "next start",
+    "lint": "pnpm tc && eslint",
+    "fix": "prettier --write . && eslint --fix",
+    "tc": "tsc --noEmit",
+    "tc:watch": "tsc --noEmit --watch",
+    "lint:cache": "eslint --cache",
+    "lint:watch": "node scripts/eslint-watch.ts",
+    "clean": "node scripts/clean.ts"
+  },
+  "dependencies": {
+    "next": "15.5.2",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-unicorn": "^60.0.0",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4",
+    "@playwright/test": "^1.55.0",
+    "globals": "^16.3.0",
+    "jiti": "^2.5.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0",
+    "npm-check-updates": "^18.0.3",
+    "glob": "^10.3.10",
+    "@types/glob": "^8.1.0"
+  }
+}
