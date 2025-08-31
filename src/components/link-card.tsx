@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
+import ky from 'ky';
 
 type OGData = {
   title: string;
   description: string;
-  image: string | null;
+  image: string | undefined;
 };
 
 type Props = {
@@ -14,28 +15,35 @@ type Props = {
 };
 
 export const LinkCard = ({ url }: Props) => {
-  const [ogData, setOGData] = useState<OGData | null>(null);
+  const [ogData, setOGData] = useState<OGData>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchOGData = async () => {
       try {
-        const response = await fetch(`/api/unfurl?url=${encodeURIComponent(url)}`);
-        if (response.status === 429) {
-          setError(true);
-          return;
-        }
-        const data = await response.json();
+        const data = await ky
+          .get('/api/unfurl', {
+            searchParams: { url },
+          })
+          .json<OGData>();
+
         setOGData(data);
-      } catch {
+      } catch (e) {
+        if (e instanceof Error && 'response' in e) {
+          const kyError = e as { response: { status: number } };
+          if (kyError.response.status === 429) {
+            setError(true);
+            return;
+          }
+        }
         setError(true);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchOGData();
+    void fetchOGData();
   }, [url]);
 
   if (loading) {
@@ -74,7 +82,7 @@ export const LinkCard = ({ url }: Props) => {
 
   const domain = new URL(url).hostname;
   const imageUrl =
-    ogData.image ||
+    ogData.image ??
     `/og?title=${encodeURIComponent(ogData.title)}&domain=${encodeURIComponent(domain)}`;
 
   return (

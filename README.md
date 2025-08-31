@@ -1,6 +1,7 @@
 # MicroRoadmap Demo App
 
-A minimal, instructive full-stack demo showcasing modern Next.js 15.5 and React 19 features. Build and visualize product roadmaps with drag-and-drop functionality, real-time updates, and caching.
+A minimal, instructive full-stack demo showcasing modern Next.js 15.5 and React 19 features. Build
+and visualize product roadmaps with drag-and-drop functionality, real-time updates, and caching.
 
 ## Features
 
@@ -24,17 +25,17 @@ A minimal, instructive full-stack demo showcasing modern Next.js 15.5 and React 
 
 1. Install dependencies:
 
-```bash
-pnpm install
-pnpm approve-builds  # Approve native module builds
-```
+   ```bash
+   pnpm install
+   pnpm approve-builds  # Approve native module builds
+   ```
 
 2. Set up the database:
 
-```bash
-pnpx drizzle-kit push    # Create database tables
-pnpx tsx src/lib/db/seed.ts  # Seed with demo data
-```
+   ```bash
+   pnpx drizzle-kit push    # Create database tables
+   pnpx tsx src/lib/db/seed.ts  # Seed with demo data
+   ```
 
 ### Development
 
@@ -90,6 +91,7 @@ The main workspace where you create and manage roadmap features:
 ### Public Roadmap (`/public`)
 
 Read-only cached view of the published roadmap:
+
 - Fast loading thanks to server-side caching
 - Shows the last published snapshot
 - Clean, presentation-ready layout
@@ -112,7 +114,7 @@ Read-only cached view of the published roadmap:
 
 ## Project Structure
 
-```
+```folder-structure
 src/
 ├── app/
 │   ├── actions.ts          # Server Actions for CRUD operations
@@ -140,22 +142,26 @@ src/
 ## Technical Highlights
 
 ### React 19 Features
+
 - **useOptimistic**: Instant UI updates with automatic rollback on errors
 - **useTransition**: Non-blocking state updates during server operations
 
 ### Next.js 15.5 Features
+
 - **Server Actions**: Type-safe server functions for CRUD operations
 - **RSC Streaming**: Analytics panel streams in progressively
 - **Tag-based Revalidation**: Published roadmap cache invalidation
 - **Route Handlers**: Custom APIs for SSE and OG unfurling
 
 ### Data Architecture
+
 - **Draft vs Published**: Separate data fetch strategies
 - **Optimistic Updates**: Client state updates immediately, server validates
 - **Cache Strategy**: Draft data never cached, published data cached with tags
 - **Overlap Validation**: Server-side feature collision detection
 
 ### Real-time Features
+
 - **Server-Sent Events**: Live activity ticker with simulated viewer counts
 - **Rate Limiting**: Token bucket algorithm for API protection
 - **OG Unfurling**: Automatic link preview generation with SVG fallbacks

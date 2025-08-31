@@ -1,9 +1,15 @@
 import { unstable_cache } from 'next/cache';
-import { db, publishedRoadmap } from '@/lib/db';
+import { db, publishedRoadmap, type Feature, type Lane } from '@/lib/db';
 import { desc } from 'drizzle-orm';
 import { PublicRoadmapView } from '@/components/public-roadmap-view';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+
+type RoadmapData = {
+  publishedAt: string;
+  features: Feature[];
+  lanes: Lane[];
+};
 
 const getPublishedRoadmap = unstable_cache(
   async () => {
@@ -14,10 +20,15 @@ const getPublishedRoadmap = unstable_cache(
       .limit(1);
 
     if (latest.length === 0) {
-      return null;
+      return;
     }
 
-    return JSON.parse(latest[0]!.data);
+    const firstResult = latest[0];
+    if (!firstResult) {
+      return;
+    }
+
+    return JSON.parse(firstResult.data) as RoadmapData;
   },
   ['published-roadmap'],
   {

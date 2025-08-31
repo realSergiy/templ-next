@@ -3,6 +3,11 @@
 import { useEffect, useState } from 'react';
 import { Activity } from 'lucide-react';
 
+type ActivityData = {
+  type: 'viewers' | 'hint';
+  value: string | number;
+};
+
 export const ActivityTicker = () => {
   const [activity, setActivity] = useState<string>('Connecting...');
   const [isConnected, setIsConnected] = useState(false);
@@ -17,11 +22,23 @@ export const ActivityTicker = () => {
 
     eventSource.addEventListener('message', event => {
       try {
-        const data = JSON.parse(event.data);
-        if (data.type === 'viewers') {
-          setActivity(`${data.value} viewers online`);
-        } else if (data.type === 'hint') {
-          setActivity(data.value);
+        const rawData = JSON.parse(event.data as string) as unknown;
+
+        // Type guard to ensure data is correct shape
+        if (
+          typeof rawData === 'object' &&
+          rawData !== null &&
+          'type' in rawData &&
+          'value' in rawData &&
+          (rawData.type === 'viewers' || rawData.type === 'hint') &&
+          (typeof rawData.value === 'string' || typeof rawData.value === 'number')
+        ) {
+          const data = rawData as ActivityData;
+          if (data.type === 'viewers') {
+            setActivity(`${data.value} viewers online`);
+          } else {
+            setActivity(String(data.value));
+          }
         }
       } catch (e) {
         console.error('Error parsing SSE data:', e);
