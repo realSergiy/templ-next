@@ -81,7 +81,10 @@ export const updateFeature = async (input: UpdateFeatureInput) => {
       return { success: false, error: 'Feature not found' };
     }
 
-    const feature = existing[0]!;
+    const feature = existing[0];
+    if (!feature) {
+      return { success: false, error: 'Feature not found' };
+    }
     const startQuarter = validated.startQuarter ?? feature.startQuarter;
     const endQuarter = validated.endQuarter ?? feature.endQuarter;
     const laneId = validated.laneId ?? feature.laneId;

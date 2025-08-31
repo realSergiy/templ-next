@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
-  const title = request.nextUrl.searchParams.get('title') || 'Link Preview';
-  const domain = request.nextUrl.searchParams.get('domain') || 'example.com';
+export function GET(request: NextRequest) {
+  const title = request.nextUrl.searchParams.get('title') ?? 'Link Preview';
+  const domain = request.nextUrl.searchParams.get('domain') ?? 'example.com';
 
   const svg = `
     <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">

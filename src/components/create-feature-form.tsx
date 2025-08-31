@@ -14,10 +14,10 @@ type Props = {
 export const CreateFeatureForm = ({ lanes, quarters }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>();
 
-  const handleSubmit = async (formData: FormData) => {
-    setError(null);
+  const handleSubmit = (formData: FormData) => {
+    setError(undefined);
 
     startTransition(async () => {
       const result = await createFeature({
@@ -32,7 +32,7 @@ export const CreateFeatureForm = ({ lanes, quarters }: Props) => {
       if (result.success) {
         setIsOpen(false);
       } else {
-        setError(result.error || 'Failed to create feature');
+        setError(result.error ?? 'Failed to create feature');
       }
     });
   };
@@ -40,7 +40,9 @@ export const CreateFeatureForm = ({ lanes, quarters }: Props) => {
   if (!isOpen) {
     return (
       <button
-        onClick={() => { setIsOpen(true); }}
+        onClick={() => {
+          setIsOpen(true);
+        }}
         className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
       >
         <Plus className="w-4 h-4" />
@@ -170,7 +172,9 @@ export const CreateFeatureForm = ({ lanes, quarters }: Props) => {
         </button>
         <button
           type="button"
-          onClick={() => { setIsOpen(false); }}
+          onClick={() => {
+            setIsOpen(false);
+          }}
           className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition"
         >
           Cancel

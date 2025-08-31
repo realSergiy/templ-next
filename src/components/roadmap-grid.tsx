@@ -16,26 +16,26 @@ export const RoadmapGrid = ({ features: initialFeatures, lanes, quarters }: Prop
   const [features, setFeatures] = useState(initialFeatures);
   const [optimisticFeatures, addOptimisticUpdate] = useOptimistic(
     features,
-    (state, update: { type: 'update' | 'delete'; feature?: Feature; id?: string }) => {
+    (state, update: { type: 'delete'; id: string } | { type: 'update'; feature: Feature }) => {
       if (update.type === 'delete') {
         return state.filter(f => f.id !== update.id);
       }
-      if (update.type === 'update' && update.feature) {
-        return state.map(f => (f.id === update.feature!.id ? update.feature! : f));
-      }
-      return state;
+      return state.map(f => (f.id === update.feature.id ? update.feature : f));
     },
   );
   const [isPending, startTransition] = useTransition();
-  const [draggedFeature, setDraggedFeature] = useState<Feature | null>(null);
+  const [draggedFeature, setDraggedFeature] = useState<Feature>();
 
   const gridWidth = 1200;
   const laneHeight = 80;
   const headerHeight = 40;
-  const startQuarter = quarters[0]!;
+  const startQuarter = quarters[0];
+  if (!startQuarter) {
+    throw new Error('No quarters available');
+  }
   const totalQuarters = quarters.length;
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     startTransition(async () => {
       addOptimisticUpdate({ type: 'delete', id });
       const result = await deleteFeature({ id });
@@ -51,7 +51,7 @@ export const RoadmapGrid = ({ features: initialFeatures, lanes, quarters }: Prop
     setDraggedFeature(feature);
   };
 
-  const handleDragEnd = async (e: React.DragEvent, feature: Feature) => {
+  const handleDragEnd = (e: React.DragEvent, feature: Feature) => {
     if (!draggedFeature) return;
 
     const rect = e.currentTarget.parentElement?.getBoundingClientRect();
@@ -93,7 +93,7 @@ export const RoadmapGrid = ({ features: initialFeatures, lanes, quarters }: Prop
       }
     });
 
-    setDraggedFeature(null);
+    setDraggedFeature(undefined);
   };
 
   return (
@@ -155,7 +155,7 @@ export const RoadmapGrid = ({ features: initialFeatures, lanes, quarters }: Prop
 
         {optimisticFeatures.map(feature => {
           const laneIndex = lanes.findIndex(l => l.id === feature.laneId);
-          if (laneIndex === -1) return null;
+          if (laneIndex === -1) return;
 
           const x =
             (getQuarterPosition(feature.startQuarter, startQuarter, totalQuarters) / 100) *
@@ -170,8 +170,12 @@ export const RoadmapGrid = ({ features: initialFeatures, lanes, quarters }: Prop
             <g
               key={feature.id}
               className="cursor-move group"
-              onMouseDown={() => { handleDragStart(feature); }}
-              onMouseUp={e => handleDragEnd(e as unknown as React.DragEvent, feature)}
+              onMouseDown={() => {
+                handleDragStart(feature);
+              }}
+              onMouseUp={e => {
+                handleDragEnd(e as unknown as React.DragEvent, feature);
+              }}
             >
               <rect
                 x={x}
@@ -179,7 +183,7 @@ export const RoadmapGrid = ({ features: initialFeatures, lanes, quarters }: Prop
                 width={width}
                 height={height}
                 rx={4}
-                fill={feature.color || '#3b82f6'}
+                fill={feature.color ?? '#3b82f6'}
                 fillOpacity={isPending ? 0.6 : 0.9}
                 className="transition-opacity"
               />
@@ -191,7 +195,9 @@ export const RoadmapGrid = ({ features: initialFeatures, lanes, quarters }: Prop
                     {feature.linkUrl && <Link className="w-3 h-3" />}
                   </div>
                   <button
-                    onClick={() => handleDelete(feature.id)}
+                    onClick={() => {
+                      handleDelete(feature.id);
+                    }}
                     className="opacity-0 group-hover:opacity-100 transition-opacity"
                     aria-label="Delete feature"
                   >

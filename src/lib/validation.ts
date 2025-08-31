@@ -5,7 +5,7 @@ export const createFeatureSchema = z.object({
   laneId: z.string(),
   startQuarter: z.number().int().min(20_241).max(20_264),
   endQuarter: z.number().int().min(20_241).max(20_264),
-  linkUrl: z.string().url().optional(),
+  linkUrl: z.string().pipe(z.url()).optional(),
   color: z.string().optional(),
 });
 
@@ -15,7 +15,7 @@ export const updateFeatureSchema = z.object({
   laneId: z.string().optional(),
   startQuarter: z.number().int().min(20_241).max(20_264).optional(),
   endQuarter: z.number().int().min(20_241).max(20_264).optional(),
-  linkUrl: z.string().url().nullable().optional(),
+  linkUrl: z.string().pipe(z.url()).nullable().optional(),
   color: z.string().nullable().optional(),
 });
 

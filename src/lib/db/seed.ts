@@ -78,4 +78,4 @@ export const seed = async () => {
   console.log('✅ Database seeded successfully!');
 };
 
-seed().catch(console.error);
+await seed();

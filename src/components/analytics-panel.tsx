@@ -1,5 +1,5 @@
 import { db, features, lanes } from '@/lib/db';
-import { eq, and, gte, lte, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { BarChart3 } from 'lucide-react';
 
 const getAnalytics = async () => {
@@ -18,7 +18,6 @@ const getAnalytics = async () => {
     };
   });
 
-  const currentYear = new Date().getFullYear();
   const activeQuarters = new Set<number>();
 
   for (const feature of draftFeatures) {
@@ -34,8 +33,10 @@ const getAnalytics = async () => {
     averageDuration:
       draftFeatures.length > 0
         ? Math.round(
-            draftFeatures.reduce((accumulator, f) => accumulator + (f.endQuarter - f.startQuarter + 1), 0) /
-              draftFeatures.length,
+            draftFeatures.reduce(
+              (accumulator, f) => accumulator + (f.endQuarter - f.startQuarter + 1),
+              0,
+            ) / draftFeatures.length,
           )
         : 0,
   };

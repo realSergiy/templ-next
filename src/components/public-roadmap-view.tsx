@@ -12,7 +12,10 @@ export const PublicRoadmapView = ({ features, lanes }: Props) => {
   const gridWidth = 1200;
   const laneHeight = 80;
   const headerHeight = 40;
-  const startQuarter = quarters[0]!;
+  const startQuarter = quarters[0];
+  if (!startQuarter) {
+    throw new Error('No quarters available');
+  }
   const totalQuarters = quarters.length;
 
   return (
@@ -75,7 +78,7 @@ export const PublicRoadmapView = ({ features, lanes }: Props) => {
 
         {features.map(feature => {
           const laneIndex = lanes.findIndex(l => l.id === feature.laneId);
-          if (laneIndex === -1) return null;
+          if (laneIndex === -1) return;
 
           const x =
             (getQuarterPosition(feature.startQuarter, startQuarter, totalQuarters) / 100) *
@@ -94,7 +97,7 @@ export const PublicRoadmapView = ({ features, lanes }: Props) => {
                 width={width}
                 height={height}
                 rx={4}
-                fill={feature.color || '#3b82f6'}
+                fill={feature.color ?? '#3b82f6'}
                 fillOpacity={0.9}
               />
               <foreignObject x={x} y={y} width={width} height={height}>

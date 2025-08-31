@@ -2,11 +2,11 @@ import { NextRequest } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
+export function GET(request: NextRequest) {
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({
-    async start(controller) {
+    start(controller) {
       const sendEvent = (data: unknown) => {
         controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
       };
