@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { Geist, Geist_Mono } from 'next/font/google';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Next.js Template',
-  description: 'A modern Next.js template with TypeScript and Tailwind CSS',
+  title: 'Roadmap Builder',
+  description: 'Interactive roadmap planner with drag-and-drop features',
+  icons: '/favicon.ico',
 };
 
 export default function RootLayout({
