@@ -11,6 +11,8 @@
 
 - [P0] **MUST NOT** fabricate facts or behavior; if uncertain, ask a brief clarifying question
   before large changes.
+- [P0] **MUST NOT** disable, suppress, or modify linter/formatter rules to bypass violations;
+  **SHOULD** fix the underlying code to comply with configured rules.
 - [P1] **MUST** align with repository tooling: produce output that passes configured
   formatters/linters/tests and CI where applicable.
 
@@ -43,6 +45,8 @@
   `erasableSyntaxOnly`, `forceConsistentCasingInFileNames`, `verbatimModuleSyntax`.
 - [P0] **MUST NOT** use `any`; use `unknown` or proper types.
 - [P0] **MUST NOT** use `@ts-ignore`, `@ts-nocheck`, or `@ts-expect-error`.
+- [P1] **MUST NOT** use non-null assertion operator (`!`); **MUST** handle potential
+  `undefined`/`null` values explicitly with proper checks or type guards.
 
 ### Type Inference
 
@@ -73,8 +77,8 @@
 - [P0] **SHOULD** prefer arrow functions over function declarations.
 - [P0] **SHOULD** use functional programming patterns.
 - [P0] **SHOULD** embrace latest modern TypeScript patterns and features.
+- [P0] **SHOULD** use top‑level `await` for async entry points; **SHOULD NOT** use
+  `.then()/.catch()` chains or module‑level IIFEs.
 - [P1] **MUST NOT** mark a function `async` unless it contains `await` or explicitly returns a
   `Promise`.
-- [P1] **SHOULD** use top‑level `await` for async entry points; **SHOULD NOT** use
-  `.then()/.catch()` chains or module‑level IIFEs.
 - [P2] **MAY** use `const` assertions for literal types when helpful.

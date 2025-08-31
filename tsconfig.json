@@ -16,6 +16,8 @@
 
     /* Type Checking */
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true,
     "forceConsistentCasingInFileNames": true,
