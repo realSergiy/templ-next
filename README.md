@@ -1,17 +1,14 @@
-# TotVibe Uploader
+# Next.js Template
 
-A simple Next.js TypeScript application that allows users to upload files using drag and drop
-functionality. Files are automatically saved to the `/data` folder.
+A modern, clean Next.js template with TypeScript, Tailwind CSS, and best practices configured out of the box.
 
 ## Features
 
-- **Drag & Drop Interface**: Simply drag files onto the upload area
-- **Multiple File Support**: Upload multiple files at once
-- **Real-time Feedback**: Visual feedback during drag operations and upload progress
-- **File Information Display**: Shows uploaded files with details (filename, size, type, upload
-  time)
-- **TypeScript**: Fully typed for better development experience
-- **Tailwind CSS**: Modern, responsive styling
+- **Next.js 15**: Latest version with App Router
+- **TypeScript**: Full type safety and enhanced developer experience  
+- **Tailwind CSS**: Utility-first CSS framework for rapid styling
+- **ESLint & Prettier**: Code linting and formatting configured
+- **Modern tooling**: pnpm, strict TypeScript configuration
 
 ## Getting Started
 
@@ -22,7 +19,13 @@ functionality. Files are automatically saved to the `/data` folder.
 
 ### Installation
 
-1. Clone the repository or navigate to the project directory
+1. Clone this repository:
+
+```bash
+git clone <your-repo-url>
+cd nextjs-template
+```
+
 2. Install dependencies:
 
 ```bash
@@ -37,8 +40,7 @@ Start the development server:
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) (or the port shown in the terminal) with your
-browser to see the application.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
 ### Building for Production
 
@@ -47,40 +49,45 @@ pnpm build
 pnpm start
 ```
 
+## Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm lint` - Run TypeScript check and ESLint
+- `pnpm fix` - Format with Prettier and fix ESLint issues
+- `pnpm clean` - Clean build artifacts
+
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── api/
-│   │   └── upload/
-│   │       └── route.ts          # API endpoint for file uploads
-│   ├── globals.css               # Global styles
-│   ├── layout.tsx               # Root layout component
-│   └── page.tsx                 # Main page component
-├── components/
-│   └── FileUploader.tsx         # Drag & drop file uploader component
-data/                            # Directory where uploaded files are stored
+│   ├── globals.css          # Global styles
+│   ├── layout.tsx          # Root layout component
+│   └── page.tsx            # Home page component
+├── components/             # Reusable React components
+public/                     # Static assets
 ```
-
-## How It Works
-
-1. **Frontend**: The `FileUploader` component provides a drag-and-drop interface built with React
-   hooks and Tailwind CSS
-2. **API**: The `/api/upload` endpoint handles file uploads using Next.js App Router API routes
-3. **File Storage**: Files are saved to the `/data` directory with timestamp prefixes to avoid
-   naming conflicts
-4. **TypeScript**: The entire application is written in TypeScript for better type safety and
-   development experience
 
 ## Technologies Used
 
 - **Next.js 15**: React framework with App Router
-- **TypeScript**: For type safety and better developer experience
+- **TypeScript**: For type safety and better developer experience  
 - **Tailwind CSS**: For styling and responsive design
-- **Biome**: For code formatting and linting
+- **ESLint**: For code linting and consistency
+- **Prettier**: For code formatting
 - **React**: Frontend library
-- **Node.js**: Runtime environment
+
+## Customization
+
+This template is designed to be a starting point. Feel free to:
+
+- Add your preferred state management solution
+- Configure additional ESLint rules
+- Add testing frameworks
+- Integrate with your preferred backend
+- Customize Tailwind configuration
 
 ## Contributing
 
