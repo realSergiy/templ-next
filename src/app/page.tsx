@@ -1,50 +1,73 @@
-export default function Home() {
+import { Suspense } from 'react';
+import { db, features, lanes } from '@/lib/db';
+import { eq } from 'drizzle-orm';
+import { RoadmapGrid } from '@/components/roadmap-grid';
+import { CreateFeatureForm } from '@/components/create-feature-form';
+import { PublishButton } from '@/components/publish-button';
+import { ActivityTicker } from '@/components/activity-ticker';
+import { AnalyticsPanel } from '@/components/analytics-panel';
+import { getQuarterRange } from '@/lib/utils';
+
+const getDraftData = async () => {
+  const [draftFeatures, allLanes] = await Promise.all([
+    db.select().from(features).where(eq(features.status, 'draft')),
+    db.select().from(lanes).orderBy(lanes.order),
+  ]);
+
+  return { features: draftFeatures, lanes: allLanes };
+};
+
+export default async function DraftWorkspace() {
+  const { features: draftFeatures, lanes: allLanes } = await getDraftData();
+  const quarters = getQuarterRange();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-      <div className="text-center space-y-6 p-8">
-        <h1 className="text-4xl font-bold text-gray-900">Welcome to Next.js Template</h1>
-        <p className="text-xl text-gray-600 max-w-2xl">
-          A clean, modern template with TypeScript, Tailwind CSS, and best practices configured out
-          of the box.
-        </p>
-        <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
-          <span className="flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            TypeScript
-          </span>
-          <span className="flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17v4a2 2 0 002 2h4"
-              />
-            </svg>
-            Tailwind CSS
-          </span>
-          <span className="flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
-            Next.js 15
-          </span>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Roadmap Draft</h1>
+            <p className="text-gray-600 mt-1">Plan and organize your product features</p>
+          </div>
+          <div className="flex gap-4">
+            <ActivityTicker />
+            <PublishButton />
+          </div>
         </div>
-        <div className="pt-4">
-          <p className="text-sm text-gray-400">Start building your amazing app from here!</p>
+
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-9 space-y-6">
+            <RoadmapGrid features={draftFeatures} lanes={allLanes} quarters={quarters} />
+            <CreateFeatureForm lanes={allLanes} quarters={quarters} />
+          </div>
+
+          <div className="col-span-3">
+            <Suspense
+              fallback={
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                  <div className="animate-pulse">
+                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                    <div className="space-y-3">
+                      <div className="h-3 bg-gray-200 rounded"></div>
+                      <div className="h-3 bg-gray-200 rounded"></div>
+                      <div className="h-3 bg-gray-200 rounded"></div>
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              <AnalyticsPanel />
+            </Suspense>
+          </div>
         </div>
+
+        {draftFeatures.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 mb-4">
+              No features yet. Create your first feature to get started!
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
