@@ -15,7 +15,7 @@ export const ActivityTicker = () => {
       setActivity('Connected');
     });
 
-    eventSource.onmessage = event => {
+    eventSource.addEventListener('message', event => {
       try {
         const data = JSON.parse(event.data);
         if (data.type === 'viewers') {
@@ -26,12 +26,12 @@ export const ActivityTicker = () => {
       } catch (e) {
         console.error('Error parsing SSE data:', e);
       }
-    };
+    });
 
-    eventSource.onerror = () => {
+    eventSource.addEventListener('error', () => {
       setIsConnected(false);
       setActivity('Reconnecting...');
-    };
+    });
 
     return () => {
       eventSource.close();
