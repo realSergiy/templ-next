@@ -42,3 +42,5 @@ next-env.d.ts
 data
 certificates
 .playwright-mcp
+playwright-report
+test-results

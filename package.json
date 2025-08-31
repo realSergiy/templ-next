@@ -8,6 +8,8 @@
     "devs": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
+    "test": "playwright test",
+    "test:ui": "playwright show-report",
     "lint": "pnpm tc && eslint",
     "fix": "prettier --write . && eslint --fix",
     "tc": "tsc --noEmit",

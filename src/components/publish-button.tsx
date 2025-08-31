@@ -14,7 +14,9 @@ export const PublishButton = () => {
       const result = await publishRoadmap();
       if (result.success) {
         setIsPublished(true);
-        setTimeout(() => { setIsPublished(false); }, 5000);
+        setTimeout(() => {
+          setIsPublished(false);
+        }, 5000);
       }
     });
   };
