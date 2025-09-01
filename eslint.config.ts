@@ -2,6 +2,9 @@ import eslint from '@eslint/js';
 import tseslint, { config } from 'typescript-eslint';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import * as nextConf from '@next/eslint-plugin-next';
 
 const ignoresConfig = config({
   ignores: ['next-env.d.ts', '.next/**', 'node_modules/**'],
@@ -16,6 +19,31 @@ const settingsConfig = config({
       tsconfigRootDir: import.meta.dirname,
     },
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+});
+
+const reactConfig = config(
+  [reactPlugin.configs.flat.recommended, reactPlugin.configs.flat['jsx-runtime']].filter(
+    (config): config is NonNullable<typeof config> => !!config,
+  ),
+  reactHooks.configs['recommended-latest'],
+);
+
+const nextConfig = config({
+  name: 'next/recommended',
+  plugins: {
+    '@next/next': nextConf.default,
+  },
+  rules: Object.fromEntries(
+    Object.entries(nextConf.flatConfig.recommended.rules).map(([key, value]) => [
+      key,
+      value === 'warn' ? 1 : value === 'error' ? 2 : 0,
+    ]),
+  ),
 });
 
 const tsConfig = config(
@@ -129,6 +157,8 @@ const unicornConfig = config(eslintPluginUnicorn.configs.recommended, {
 const fullConfig = config(
   ignoresConfig,
   settingsConfig,
+  reactConfig,
+  nextConfig,
   tsConfig,
   unicornConfig,
   eslintConfigPrettier,

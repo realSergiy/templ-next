@@ -1,8 +1,148 @@
 {
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "linterOptions": {
     "reportUnusedDisableDirectives": 1
   },
   "rules": {
+    "react/display-name": [
+      2
+    ],
+    "react/jsx-key": [
+      2
+    ],
+    "react/jsx-no-comment-textnodes": [
+      2
+    ],
+    "react/jsx-no-duplicate-props": [
+      2
+    ],
+    "react/jsx-no-target-blank": [
+      2
+    ],
+    "react/jsx-no-undef": [
+      2
+    ],
+    "react/jsx-uses-react": [
+      0
+    ],
+    "react/jsx-uses-vars": [
+      2
+    ],
+    "react/no-children-prop": [
+      2
+    ],
+    "react/no-danger-with-children": [
+      2
+    ],
+    "react/no-deprecated": [
+      2
+    ],
+    "react/no-direct-mutation-state": [
+      2
+    ],
+    "react/no-find-dom-node": [
+      2
+    ],
+    "react/no-is-mounted": [
+      2
+    ],
+    "react/no-render-return-value": [
+      2
+    ],
+    "react/no-string-refs": [
+      2
+    ],
+    "react/no-unescaped-entities": [
+      2
+    ],
+    "react/no-unknown-property": [
+      2
+    ],
+    "react/no-unsafe": [
+      0
+    ],
+    "react/prop-types": [
+      2
+    ],
+    "react/react-in-jsx-scope": [
+      0
+    ],
+    "react/require-render-return": [
+      2
+    ],
+    "react-hooks/rules-of-hooks": [
+      2
+    ],
+    "react-hooks/exhaustive-deps": [
+      1
+    ],
+    "@next/next/google-font-display": [
+      1
+    ],
+    "@next/next/google-font-preconnect": [
+      1
+    ],
+    "@next/next/next-script-for-ga": [
+      1
+    ],
+    "@next/next/no-async-client-component": [
+      1
+    ],
+    "@next/next/no-before-interactive-script-outside-document": [
+      1
+    ],
+    "@next/next/no-css-tags": [
+      1
+    ],
+    "@next/next/no-head-element": [
+      1
+    ],
+    "@next/next/no-html-link-for-pages": [
+      1
+    ],
+    "@next/next/no-img-element": [
+      1
+    ],
+    "@next/next/no-page-custom-font": [
+      1
+    ],
+    "@next/next/no-styled-jsx-in-document": [
+      1
+    ],
+    "@next/next/no-sync-scripts": [
+      1
+    ],
+    "@next/next/no-title-in-document-head": [
+      1
+    ],
+    "@next/next/no-typos": [
+      1
+    ],
+    "@next/next/no-unwanted-polyfillio": [
+      1
+    ],
+    "@next/next/inline-script-id": [
+      2
+    ],
+    "@next/next/no-assign-module-variable": [
+      2
+    ],
+    "@next/next/no-document-import-in-page": [
+      2
+    ],
+    "@next/next/no-duplicate-head": [
+      2
+    ],
+    "@next/next/no-head-import-in-document": [
+      2
+    ],
+    "@next/next/no-script-component-in-head": [
+      2
+    ],
     "constructor-super": [
       0
     ],
@@ -2234,6 +2374,9 @@
   },
   "plugins": [
     "@",
+    "react",
+    "react-hooks:eslint-plugin-react-hooks",
+    "@next/next",
     "@typescript-eslint:@typescript-eslint/eslint-plugin@8.41.0",
     "unicorn:eslint-plugin-unicorn@60.0.0"
   ],
@@ -2249,7 +2392,11 @@
           "1": "postcss.config.mjs"
         }
       },
-      "tsconfigRootDir": "/home/srg/Documents/new-repo/templ-next"
+      "tsconfigRootDir": "/home/srg/Documents/new-repo/templ-next",
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "jsxPragma": null
     },
     "globals": {
       "AggregateError": false,

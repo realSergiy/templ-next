@@ -5,17 +5,17 @@ type TestFixtures = {
 };
 
 export const test = base.extend<TestFixtures>({
-  page: async ({ page }, use) => {
+  page: async ({ page }, injectPage) => {
     // Seed database before each test
     const response = await page.request.post('/api/test/seed');
     if (!response.ok()) {
       throw new Error(`Failed to seed database: ${response.status()}`);
     }
-    
-    await use(page);
+
+    await injectPage(page);
   },
 
-  roadmapWithFeatures: async ({ page }, use) => {
+  roadmapWithFeatures: async ({ page }, injectPage) => {
     await page.goto('/');
     await page.waitForSelector('svg', { timeout: 10_000 });
 
@@ -27,7 +27,7 @@ export const test = base.extend<TestFixtures>({
       throw new Error('No features found after seeding database');
     }
 
-    await use(page);
+    await injectPage(page);
   },
 });
 

@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
+    "@next/eslint-plugin-next": "^15.5.2",
     "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4",
     "@types/better-sqlite3": "^7.6.13",
@@ -44,6 +45,8 @@
     "drizzle-kit": "^0.31.4",
     "eslint": "^9.34.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-unicorn": "^60.0.0",
     "glob": "^10.3.10",
     "globals": "^16.3.0",
