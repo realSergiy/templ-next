@@ -20,21 +20,8 @@ const DEFAULT_PATTERNS = [
   'dist',
   'build',
   'coverage',
-  '.nyc_output',
   '.eslintcache',
   '.DS_Store',
-  '*.log',
-  'npm-debug.log*',
-  'yarn-debug.log*',
-  'yarn-error.log*',
-  'pnpm-debug.log*',
-  '*.tsbuildinfo',
-  '.turbo',
-  '.vercel',
-  '.env.local',
-  '.env.development.local',
-  '.env.test.local',
-  '.env.production.local',
 ] as const;
 
 const parseGitignore = (content: string) =>
