@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import ky from 'ky';
+import Image from 'next/image';
 
 type OGData = {
   title: string;
@@ -65,9 +66,11 @@ export const LinkCard = ({ url }: Props) => {
         className="block border border-gray-200 rounded-lg p-3 hover:border-gray-300 transition"
       >
         <div className="flex items-start gap-3">
-          <img
+          <Image
             src={`/og?title=${encodeURIComponent(domain)}&domain=${encodeURIComponent(domain)}`}
             alt=""
+            width={48}
+            height={48}
             className="w-12 h-12 rounded"
           />
           <div className="flex-1 min-w-0">
@@ -93,9 +96,11 @@ export const LinkCard = ({ url }: Props) => {
       className="block border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 transition"
     >
       {imageUrl && (
-        <img
+        <Image
           src={imageUrl}
           alt=""
+          width={400}
+          height={128}
           className="w-full h-32 object-cover"
           onError={e => {
             e.currentTarget.src = `/og?title=${encodeURIComponent(ogData.title)}&domain=${encodeURIComponent(domain)}`;
